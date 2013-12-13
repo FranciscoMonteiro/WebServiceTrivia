@@ -6,10 +6,12 @@
 
 package pt.altran.services;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
@@ -31,6 +33,9 @@ public class QuestionaryService extends AbstractService<Questionary> implements 
     private Questionary currentQuestionary;
     private Question currentQuestion;
     private Iterator<Question> iteratorQuestion; 
+    
+    @Inject
+    private QuestionServiceLocal questionService;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -43,11 +48,13 @@ public class QuestionaryService extends AbstractService<Questionary> implements 
     
     @WebMethod
     public String start(){
-        currentQuestionary = find(1);
+        currentQuestionary = find(new BigDecimal(1));
         iteratorQuestion = currentQuestionary.getQuestionCollection().iterator();
+        System.out.println(currentQuestionary);
         try {
             while(nextQuestion()){
-                System.out.println("questão: " + currentQuestion.getQuestionContent());
+                questionService.setCurrentQuestion(currentQuestion);
+                System.out.println("questão: " + questionService.getCurrentQuestion().getQuestionContent());
                 Thread.sleep(10);
             }
             

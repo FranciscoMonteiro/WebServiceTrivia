@@ -27,9 +27,6 @@ public class QuestionService extends AbstractService<Question> implements Questi
     
     private Question currentQuestion;
     private Answer currentAnswer;
-    
-    @Inject
-    QuestionaryService questionaryService;
 
     @Override
     protected EntityManager getEntityManager() {
