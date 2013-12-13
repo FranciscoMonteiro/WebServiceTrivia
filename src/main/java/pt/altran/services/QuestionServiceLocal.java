@@ -37,4 +37,6 @@ public interface QuestionServiceLocal {
     
     public void setCurrentAnswer(Answer currentAnswer);
     
+    public String getCurrentQuestionContent();
+    
 }

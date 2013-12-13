@@ -6,8 +6,7 @@
 
 package pt.altran.services;
 
-import javax.ejb.Stateful;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
@@ -19,8 +18,8 @@ import pt.altran.entities.Question;
  *
  * @author User
  */
-@WebService
-@Stateful
+
+@Stateless
 public class QuestionService extends AbstractService<Question> implements QuestionServiceLocal {
     @PersistenceContext(unitName = "webServiceTrivia")
     private EntityManager em;
@@ -37,16 +36,22 @@ public class QuestionService extends AbstractService<Question> implements Questi
         super(Question.class);
     }
 
-    @WebMethod
+    @Override
     public Question getCurrentQuestion() {
         return currentQuestion;
     }
+    
+    @Override
+    public String getCurrentQuestionContent() {
+        return currentQuestion.getQuestionContent();
+    }
 
+    @Override
     public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
 
-    @WebMethod
+    @Override
     public void setCurrentAnswer(Answer currentAnswer) {
         this.currentAnswer = currentAnswer;
     }

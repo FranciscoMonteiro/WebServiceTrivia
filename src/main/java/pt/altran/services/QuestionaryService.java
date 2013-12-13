@@ -25,7 +25,6 @@ import pt.altran.entities.Questionary;
  */
 
 @WebService
-@Stateless
 public class QuestionaryService extends AbstractService<Questionary> implements QuestionaryServiceLocal {
     @PersistenceContext(unitName = "webServiceTrivia")
     private EntityManager em;
@@ -35,7 +34,7 @@ public class QuestionaryService extends AbstractService<Questionary> implements 
     private Iterator<Question> iteratorQuestion; 
     
     @Inject
-    private QuestionServiceLocal questionService;
+    private CurrentQuestion currentQuestionService;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -53,9 +52,9 @@ public class QuestionaryService extends AbstractService<Questionary> implements 
         System.out.println(currentQuestionary);
         try {
             while(nextQuestion()){
-                questionService.setCurrentQuestion(currentQuestion);
-                System.out.println("questão: " + questionService.getCurrentQuestion().getQuestionContent());
-                Thread.sleep(10);
+                currentQuestionService.setQuestion(currentQuestion);
+                System.out.println("questão: " + currentQuestionService.getQuestion().getQuestionContent());
+                Thread.sleep(10000);
             }
             
         } catch (InterruptedException ex) {
