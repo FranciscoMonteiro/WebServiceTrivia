@@ -7,6 +7,7 @@
 package pt.altran.services;
 
 import java.util.List;
+import pt.altran.entities.Answer;
 import pt.altran.entities.Question;
 
 /**
@@ -29,5 +30,11 @@ public interface QuestionServiceLocal {
     List<Question> findRange(int[] range);
 
     int count();
+    
+    public Question getCurrentQuestion();
+
+    public void setCurrentQuestion(Question currentQuestion);
+    
+    public void setCurrentAnswer(Answer currentAnswer);
     
 }
